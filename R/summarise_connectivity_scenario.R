@@ -13,11 +13,6 @@ summarise_connectivity_scenario <- function(
       new_area_squared,
       baseline_area_total
     ),
-    ## TODO - update area_total to refer to just "area" - and double
-    ## check how this is being used.
-    ## TODO - make sure to update connectivity probability in {urbioconnect}
-    ## Noting that connectivity_probability will use effective mesh size,
-    ## rather than calculating it again inside connectivity_probability
     prob_connectedness = connectivity_probability(
       effective_mesh_size = effective_mesh_ha,
       area_total = baseline_area_total

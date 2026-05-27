@@ -17,9 +17,9 @@ results_baseline_connectivity_63254b892ab241b5|branch|7eeebc21d5fdd73e|583a13968
 results_baseline_connectivity|pattern|d1c3cce1d1a51356|583a139681957e16||1378652826||||323|rds|local|vector||results_baseline_connectivity_63254b892ab241b5|0.002||
 scenario_a_connectivity_3c8b966411e66468|branch|9195f9c019a8db7f|b93f424676987900|240c373b65b84bb4|-277557796||t20600.0402867483s|s2086b|2086|rds|local|list|scenario_a_connectivity||1.062||
 scenario_a_connectivity|pattern|d46c99d9deb4be6e|b93f424676987900||-316484701||||2086|rds|local|list||scenario_a_connectivity_3c8b966411e66468|1.062||
-connectivity_probability|function|c28480c8761a756a
-.Random.seed|object|76b3b1747ea71cb6
-controller|object|d8d2076af21b054a
-summarise_connectivity_scenario|function|0158d296ae2fa0d4
 results_scenario_a_connectivity_63254b892ab241b5|branch|f997a54a48133765|6f69b29a1a2542a7|1eb98d03d64536ea|-2012588663||t20600.0958791765s|s229b|229|rds|local|vector|results_scenario_a_connectivity||1.273||
 results_scenario_a_connectivity|pattern|bc589b2278af1f7c|6f69b29a1a2542a7||1781391406||||229|rds|local|vector||results_scenario_a_connectivity_63254b892ab241b5|1.273||
+connectivity_probability|function|c28480c8761a756a
+.Random.seed|object|1a5319ef174888d3
+controller|object|cb648854491ddb7b
+summarise_connectivity_scenario|function|0158d296ae2fa0d4
