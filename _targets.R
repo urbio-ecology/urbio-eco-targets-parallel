@@ -2,9 +2,6 @@
 ## Load your packages, e.g. library(targets).
 source("packages.R")
 
-## Load any R files
-tar_source()
-
 # facilitate this working in parallel
 controller <- crew_controller_local(
   name = "my_controller",
@@ -20,56 +17,38 @@ tar_option_set(
 tar_assign({
   ## TODO - use knox data (fairy wren data)
   barrier <- example_barrier() |> tar_terra_rast()
-  barrier_scenario_a <- example_barrier() |> tar_terra_rast()
+  barrier_scenario_a <- example_barrier_scenario() |> tar_terra_rast()
   habitat <- example_habitat() |> tar_terra_rast()
 
-  species_name <- tar_target("Blue-Tongued-Lizard")
-  target_resolution <- tar_target(500)
-  data_resolution <- tar_target(10)
-  aggregation_factor <- tar_target(target_resolution / data_resolution)
-  buffer_distance <- tar_target(10)
+  species <- tar_target("Blue-tongued Lizard")
+  interpatch_distance <- tar_target(c(20, 40))
 
   baseline_connectivity <- habitat_connectivity(
     habitat = habitat,
     barrier = barrier,
-    distance = buffer_distance
+    species = species,
+    interpatch_distance = interpatch_distance
   ) |>
     tar_target(
-      pattern = map(buffer_distance),
-      iteration = "list"
+      pattern = map(interpatch_distance)
     )
 
   scenario_a_connectivity <- habitat_connectivity(
     habitat = habitat,
     barrier = barrier_scenario_a,
-    distance = buffer_distance
+    species = species,
+    interpatch_distance = interpatch_distance
   ) |>
     tar_target(
-      pattern = map(buffer_distance),
-      iteration = "list"
+      pattern = map(interpatch_distance)
     )
 
-  results_baseline_connectivity <- summarise_connectivity(
-    area_squared = baseline_connectivity$area_squared,
-    area_total = baseline_connectivity$area,
-    buffer_distance = buffer_distance,
-    target_resolution = target_resolution,
-    data_resolution = data_resolution,
-    aggregation_factor = aggregation_factor,
-    species_name = species_name
+  scenario_a_comparison <- compare_connectivity(
+    scenario = scenario_a_connectivity,
+    baseline = baseline_connectivity,
+    scenario_name = "A new road"
   ) |>
     tar_target(
-      pattern = map(baseline_connectivity, buffer_distance)
-    )
-
-  results_scenario_a_connectivity <- summarise_connectivity_scenario(
-    new_area_squared = scenario_a_connectivity$area_squared,
-    new_area_total = scenario_a_connectivity$area,
-    baseline_area_total = baseline_connectivity$area,
-    buffer_distance = buffer_distance,
-    species_name = species_name
-  ) |>
-    tar_target(
-      pattern = map(baseline_connectivity, buffer_distance)
+      pattern = map(scenario_a_connectivity, baseline_connectivity)
     )
 })
